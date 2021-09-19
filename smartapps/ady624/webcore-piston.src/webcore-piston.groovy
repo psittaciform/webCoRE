@@ -2907,9 +2907,9 @@ private long vcmd_wolRequest(rtData, device, params) {
 	def mac = params[0]
 	def secureCode = params[1]
 	mac = mac.replace(":", "").replace("-", "").replace(".", "").replace(" ", "").toLowerCase()
-	sendHubCommand(new physicalgraph.device.HubAction(
+	sendHubCommand(new com.parrotha.device.HubAction(
 		"wake on lan $mac",
-		physicalgraph.device.Protocol.LAN,
+		com.parrotha.device.Protocol.LAN,
 		null,
 		secureCode ? [secureCode: secureCode] : [:]
 	))
@@ -3172,7 +3172,7 @@ private long vcmd_lifxPulse(rtData, device, params) {
 }
 
 
-public localHttpRequestHandler(physicalgraph.device.HubResponse hubResponse) {
+public localHttpRequestHandler(com.parrotha.device.HubResponse hubResponse) {
 	def responseCode = ''
 	for (header in hubResponse.headers) {
     	if (header.key.startsWith('http')) {
@@ -3286,7 +3286,7 @@ private long vcmd_httpRequest(rtData, device, params) {
 				query: useQueryString ? data : null, //thank you @destructure00
 				body: !useQueryString ? data : null //thank you @destructure00
 			]
-			sendHubCommand(new physicalgraph.device.HubAction(requestParams, null, [callback: localHttpRequestHandler]))
+			sendHubCommand(new com.parrotha.device.HubAction(requestParams, null, [callback: localHttpRequestHandler]))
             return 20000
 		} catch (all) {
 			error "Error executing internal web request: ", rtData, null, all
